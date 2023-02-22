@@ -60,7 +60,8 @@ int main(void)
 {
     // initialize the device
     SYSTEM_Initialize();
-
+    TRISA = 0xff00;
+    PORTA = 0xff;
     while (1)
     {
         // Add your application code

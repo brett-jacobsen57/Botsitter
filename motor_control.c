@@ -6,6 +6,7 @@
  * Implementation file for motor control
  */
 
+#include "mcc_generated_files/system.h"
 #include "motor_control.h"
 
 void init_motors()
