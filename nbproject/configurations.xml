@@ -14,6 +14,12 @@
         <itemPath>mcc_generated_files/mcc.h</itemPath>
         <itemPath>mcc_generated_files/traps.h</itemPath>
       </logicalFolder>
+      <itemPath>bluetooth.h</itemPath>
+      <itemPath>delay.h</itemPath>
+      <itemPath>i2c.h</itemPath>
+      <itemPath>lcd.h</itemPath>
+      <itemPath>localization.h</itemPath>
+      <itemPath>motor_control.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -34,17 +40,11 @@
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>bluetooth.c</itemPath>
-      <itemPath>bluetooth.h</itemPath>
       <itemPath>delay.c</itemPath>
-      <itemPath>delay.h</itemPath>
       <itemPath>i2c.c</itemPath>
-      <itemPath>i2c.h</itemPath>
       <itemPath>lcd.c</itemPath>
-      <itemPath>lcd.h</itemPath>
       <itemPath>localization.c</itemPath>
-      <itemPath>localization.h</itemPath>
       <itemPath>motor_control.c</itemPath>
-      <itemPath>motor_control.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
