@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <executable name="dist/default/production/botsitter.X.production.elf">
+  <executable name="dist/default/debug/botsitter.X.debug.elf">
     <memory name="data">
       <units>bytes</units>
       <length>8192</length>
-      <used>80</used>
-      <free>8112</free>
+      <used>160</used>
+      <free>8032</free>
     </memory>
     <memory name="program">
       <units>bytes</units>
       <length>131322</length>
-      <used>13029</used>
-      <free>118293</free>
+      <used>13032</used>
+      <free>118290</free>
     </memory>
   </executable>
 </project>

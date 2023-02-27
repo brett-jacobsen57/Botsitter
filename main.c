@@ -51,20 +51,69 @@
 #include "bluetooth.h"
 #include "localization.h"
 #include "motor_control.h"
-//#include "lcd.h" // For testing purposes
+#include "ping.h"
+#include "lcd.h" // For testing purposes
 
-/*
-                         Main application
- */
+#define BusyLCD() readLCD(0) & 0x80
+#define putLCD(d) writeLCD(1,(d))
+#define cmdLCD(c) writeLCD(0,(c))
+#define homeLCD() writeLCD(0,2)
+#define clrLCD() writeLCD(0,1)
+
+const int A = 70;
+const int n = 2;
+
+long duration = 0; 
+long durationms = 0;
+int distance = 0;
+float x = 0;
+float y = 0;
+
 int main(void)
 {
     // initialize the device
     SYSTEM_Initialize();
-    TRISA = 0xff00;
-    PORTA = 0xff;
+    init_ping();
+    initLCD();
+    init_motors();
+    
+    int x1 = 0;
+    int y1 = 0;
+    int x2 = 300;
+    int y2 = 0;
+    
+    int RSSI1;
+    int RSSI2;
+    
     while (1)
     {
-        // Add your application code
+        RSSI1 = -69;
+        RSSI2 = -77;
+        
+        float d1 = distanceFromRSSI(RSSI1, n, A);
+        float d2 = distanceFromRSSI(RSSI2, n, A);
+        findCoordinates(&x, &y, x1, y1, x2, y2, d1, d2);
+        displayCoordinates(x, y);
+        
+        distance = pingDistance(duration);
+        
+        if (PORTDbits.RD6 == 0)
+            forward();
+        else if (PORTDbits.RD7 == 0)
+            backward();
+        else if (PORTDbits.RD13 == 0)
+            stop();
+        
+        if (distance > 25 && distance < 50)
+        {
+            PORTAbits.RA1 = 1;
+        }
+        for (int i=0; i<6000; i++);
+        PORTAbits.RA1 = 0;
+        
+        //displayPingDistance(distance);
+        
+        for (int i=0; i<3000; i++); //delay roughly 4 milliseconds */
     }
     
     return 1;

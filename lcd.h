@@ -13,12 +13,10 @@
 extern "C" {
 #endif
 
-void InitPMP(void);
-void InitLCD(void);
-char ReadLCD(int addr);
-void WriteLCD(int addr, char c);
-void putsLCD(char *s);
-void SetCursorAtLine(int i);
+void initLCD(void);
+char readLCD(int addr);
+void writeLCD(int addr, char c);
+void setCursorAtLine(int i);
 
 #ifdef	__cplusplus
 }

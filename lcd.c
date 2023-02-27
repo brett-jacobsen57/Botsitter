@@ -6,75 +6,66 @@
  */
 
 #include "mcc_generated_files/system.h"
-#include "lcd.h"
-#include "delay.h"
 
-void InitPMP(void)
+void initLCD(void)
 {
+    T1CON = 0x8030;
+    TMR1 = 0; while(TMR1<2000);
+    
+    //Initialize the PMP
     PMCON = 0x8303;
     PMMODE = 0x03FF;
     PMAEN = 0x0001;
-}
-
-void InitLCD(void)
-{
+    
     PMADDR = 0;
     PMDIN1 = 0b00111000;
-    ms_delay(1);
+    TMR1 = 0;while(TMR1<3);
     
     PMDIN1 = 0b00001100;
-    ms_delay(1);
+    TMR1 = 0;while(TMR1<3);
     
     PMDIN1 = 0b00000001;
-    ms_delay(2);
+    TMR1 = 0; while(TMR1<110);
     
-    PMDIN1 = 0b00000110; 
-    ms_delay(2);
-} // InitLCD
+    PMDIN1 = 0b00000110;
+    TMR1 = 0; while(TMR1<110);
+}
 
-char ReadLCD(int addr)
+char readLCD(int addr)
 {
     int dummy;
-    while (PMMODEbits.BUSY); 
-    PMADDR = addr; 
-    dummy = PMDIN1; 
-    while (PMMODEbits.BUSY); 
-    return (PMDIN1);
-} // ReadLCD
+    while(PMMODEbits.BUSY);
+    PMADDR = addr;
+    dummy = PMDIN1;
+    while(PMMODEbits.BUSY);
+    return(PMDIN1);
+}
 
-#define BusyLCD() ReadLCD(0) & 0x80
-#define AddrLCD() ReadLCD(0) & 0x7F
-#define getLCD() ReadLCD(1)
-
-void WriteLCD(int addr, char c)
+#define BusyLCD() readLCD(0) & 0x80
+void writeLCD(int addr, char c)
 {
-    while (BusyLCD());
-    while (PMMODEbits.BUSY);
+    while(BusyLCD());
+    while(PMMODEbits.BUSY);
     PMADDR = addr;
     PMDIN1 = c;
 }
 
-#define putLCD(d) WriteLCD(1, (d))
-#define CmdLCD(c) WriteLCD(0, (c))
-#define HomeLCD() WriteLCD(0, 2)
-#define ClrLCD() WriteLCD(0, 1)
+#define putLCD(d) writeLCD(1,(d))
+#define cmdLCD(c) writeLCD(0,(c))
+#define homeLCD() writeLCD(0,2)
+#define clrLCD() writeLCD(0,1)
 
-void putsLCD(char *s)
-{
-    while (*s) putLCD(*s++);
-} //putsLCD
-
-void SetCursorAtLine(int i)
+void setCursorAtLine(int i)
 {
     int k;
     
     if (i == 1)
     {
-        HomeLCD();
+        homeLCD();
     }
     else if (i == 2)
     {
-        CmdLCD(192);
+        cmdLCD(192);
     }
     else
     {
